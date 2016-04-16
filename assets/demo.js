@@ -25,7 +25,7 @@ var DEMO = {
 		this.ms_Scene = new THREE.Scene();
 
 		this.ms_Camera = new THREE.PerspectiveCamera(55.0, WINDOW.ms_Width / WINDOW.ms_Height, 0.5, 3000000);
-		this.ms_Camera.position.set(1000, 500, -1500);
+		this.ms_Camera.position.set(0, 10, -980);
 		this.ms_Camera.lookAt(new THREE.Vector3(0, 0, 0));
 
 		// Initialize Orbit control
@@ -62,6 +62,33 @@ var DEMO = {
 		this.ms_Scene.add(aMeshMirror);
 
 		this.loadSkyBox();
+
+		this.loadBoat(this.ms_Scene);
+	},
+
+	loadBoat: function loadBoat(scene) {
+		var loader = new THREE.JSONLoader(); // init the loader util
+		// init loading
+		loader.load('assets/model/Boat.js', function (geometry) {
+			// create a new material
+			var material = new THREE.MeshLambertMaterial({
+	//  map: THREE.ImageUtils.loadTexture('path_to_texture'),  // specify and load the texture
+				colorAmbient: [0.480000026226044, 0.480000026226044, 0.480000026226044],
+				colorDiffuse: [0.480000026226044, 0.480000026226044, 0.480000026226044],
+				colorSpecular: [0.8999999761581421, 0.8999999761581421, 0.8999999761581421]
+			});
+
+			// create a mesh with models geometry and material
+			var mesh = new THREE.Mesh(
+				geometry,
+				material
+			);
+
+			mesh.position.set(0, -1.6, -950);
+			mesh.rotation.y = -Math.PI/5;
+
+		  scene.add(mesh);
+		});
 	},
 
 	loadSkyBox: function loadSkyBox() {
