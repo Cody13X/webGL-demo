@@ -22,7 +22,7 @@
 "colorSpecular"  : [0.9000, 0.9000, 0.9000],
 "opacity"  : 1.0,
 "specularCoef"  : 96.0784,
-"mapDiffuse"    : "Boat_D.tga",
+"mapDiffuse"    : "../model/Boat_D.jpg",
 "vertexColors" : false
 }
 

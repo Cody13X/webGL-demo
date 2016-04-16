@@ -69,10 +69,11 @@ var DEMO = {
 	loadBoat: function loadBoat(scene) {
 		var loader = new THREE.JSONLoader(); // init the loader util
 		// init loading
-		loader.load('assets/model/Boat.js', function (geometry) {
+		loader.load('assets/model/Boat.js', function (geometry, materials) {
 			// create a new material
+//			var mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
 			var material = new THREE.MeshLambertMaterial({
-	//  map: THREE.ImageUtils.loadTexture('path_to_texture'),  // specify and load the texture
+	  		map: THREE.ImageUtils.loadTexture('assets/model/Boat_D.jpg'),  // specify and load the texture
 				colorAmbient: [0.480000026226044, 0.480000026226044, 0.480000026226044],
 				colorDiffuse: [0.480000026226044, 0.480000026226044, 0.480000026226044],
 				colorSpecular: [0.8999999761581421, 0.8999999761581421, 0.8999999761581421]
@@ -85,9 +86,11 @@ var DEMO = {
 			);
 
 			mesh.position.set(0, -1.6, -950);
-			mesh.rotation.y = -Math.PI/5;
+		//	mesh.rotation.y = -Math.PI/5;
 
 		  scene.add(mesh);
+			var light = new THREE.AmbientLight(0xffffff);
+    	scene.add(light);
 		});
 	},
 
