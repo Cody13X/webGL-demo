@@ -17,10 +17,10 @@ var DEMO = {
     })(),
 
 	initialize: function initialize(inIdCanvas) {
-			this.ms_Canvas = $('#'+inIdCanvas);
+		this.ms_Canvas = $('#'+inIdCanvas);
 
 		// Initialize Renderer, Camera and Scene
-/*		this.ms_Renderer = this.enable? new THREE.WebGLRenderer() : new THREE.CanvasRenderer();
+		this.ms_Renderer = this.enable? new THREE.WebGLRenderer() : new THREE.CanvasRenderer();
 		this.ms_Canvas.html(this.ms_Renderer.domElement);
 		this.ms_Scene = new THREE.Scene();
 
@@ -29,7 +29,7 @@ var DEMO = {
 		this.ms_Camera.lookAt(new THREE.Vector3(0, 0, 0));
 
 		// Initialize Orbit control
-		this.ms_Controls = new THREE.OrbitControls(this.ms_Camera, this.ms_Renderer.domElement);
+/*		this.ms_Controls = new THREE.OrbitControls(this.ms_Camera, this.ms_Renderer.domElement);
 
 		// Add light
 		var directionalLight = new THREE.DirectionalLight(0xffff55, 1);
