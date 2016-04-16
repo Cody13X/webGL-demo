@@ -1,6 +1,6 @@
 function mainLoop() {
-/*    requestAnimationFrame(mainLoop);
-    DEMO.update();*/
+    requestAnimationFrame(mainLoop);
+    DEMO.update();
 }
 
 $(function() {
@@ -11,5 +11,5 @@ $(function() {
 	WINDOW.resizeCallback = function(inWidth, inHeight) { DEMO.resize(inWidth, inHeight); };
 	DEMO.resize(WINDOW.ms_Width, WINDOW.ms_Height);
 
-    mainLoop();
+  mainLoop();
 });

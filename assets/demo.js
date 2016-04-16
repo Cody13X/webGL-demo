@@ -61,17 +61,17 @@ var DEMO = {
 
 		this.ms_Scene.add(aMeshMirror);
 
-/*		this.loadSkyBox();*/
+		this.loadSkyBox();
 	},
 
 	loadSkyBox: function loadSkyBox() {
-/*		var aCubeMap = THREE.ImageUtils.loadTextureCube([
-		  '../demo/assets/img/px.jpg',
-		  '../demo/assets/img/nx.jpg',
-		  '../demo/assets/img/py.jpg',
-		  '../demo/assets/img/ny.jpg',
-		  '../demo/assets/img/pz.jpg',
-		  '../demo/assets/img/nz.jpg'
+		var aCubeMap = THREE.ImageUtils.loadTextureCube([
+		  'assets/img/px.jpg',
+		  'assets/img/nx.jpg',
+		  'assets/img/py.jpg',
+		  'assets/img/ny.jpg',
+		  'assets/img/pz.jpg',
+		  'assets/img/nz.jpg'
 		]);
 		aCubeMap.format = THREE.RGBFormat;
 
@@ -91,25 +91,25 @@ var DEMO = {
 		  aSkyBoxMaterial
 		);
 
-		this.ms_Scene.add(aSkybox);*/
+		this.ms_Scene.add(aSkybox);
 	},
 
     display: function display() {
-/*		this.ms_Water.render();
-		this.ms_Renderer.render(this.ms_Scene, this.ms_Camera);*/
+		this.ms_Water.render();
+		this.ms_Renderer.render(this.ms_Scene, this.ms_Camera);
 	},
 
 	update: function update() {
-/*		this.ms_Water.material.uniforms.time.value += 1.0 / 60.0;
-		this.ms_Controls.update();
-		this.display();*/
+		this.ms_Water.material.uniforms.time.value += 1.0 / 60.0;
+/*		this.ms_Controls.update();*/
+		this.display();
 	},
 
 	resize: function resize(inWidth, inHeight) {
-/*		this.ms_Camera.aspect =  inWidth / inHeight;
+		this.ms_Camera.aspect =  inWidth / inHeight;
 		this.ms_Camera.updateProjectionMatrix();
 		this.ms_Renderer.setSize(inWidth, inHeight);
 		this.ms_Canvas.html(this.ms_Renderer.domElement);
-		this.display();*/
+		this.display();
 	}
 };
