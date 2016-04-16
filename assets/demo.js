@@ -17,10 +17,10 @@ var DEMO = {
     })(),
 
 	initialize: function initialize(inIdCanvas) {
-/*		this.ms_Canvas = $('#'+inIdCanvas);
+			this.ms_Canvas = $('#'+inIdCanvas);
 
 		// Initialize Renderer, Camera and Scene
-		this.ms_Renderer = this.enable? new THREE.WebGLRenderer() : new THREE.CanvasRenderer();
+/*		this.ms_Renderer = this.enable? new THREE.WebGLRenderer() : new THREE.CanvasRenderer();
 		this.ms_Canvas.html(this.ms_Renderer.domElement);
 		this.ms_Scene = new THREE.Scene();
 
