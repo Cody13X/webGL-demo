@@ -41,7 +41,7 @@ var DEMO = {
 		waterNormals.wrapS = waterNormals.wrapT = THREE.RepeatWrapping;
 
 		// Create the water effect
-/*		this.ms_Water = new THREE.Water(this.ms_Renderer, this.ms_Camera, this.ms_Scene, {
+		this.ms_Water = new THREE.Water(this.ms_Renderer, this.ms_Camera, this.ms_Scene, {
 			textureWidth: 256,
 			textureHeight: 256,
 			waterNormals: waterNormals,
@@ -61,7 +61,7 @@ var DEMO = {
 
 		this.ms_Scene.add(aMeshMirror);
 
-		this.loadSkyBox();*/
+/*		this.loadSkyBox();*/
 	},
 
 	loadSkyBox: function loadSkyBox() {
