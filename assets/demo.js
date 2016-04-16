@@ -29,7 +29,7 @@ var DEMO = {
 		this.ms_Camera.lookAt(new THREE.Vector3(0, 0, 0));
 
 		// Initialize Orbit control
-/*		this.ms_Controls = new THREE.OrbitControls(this.ms_Camera, this.ms_Renderer.domElement);
+/*		this.ms_Controls = new THREE.OrbitControls(this.ms_Camera, this.ms_Renderer.domElement);*/
 
 		// Add light
 		var directionalLight = new THREE.DirectionalLight(0xffff55, 1);
@@ -37,11 +37,11 @@ var DEMO = {
 		this.ms_Scene.add(directionalLight);
 
 		// Load textures
-		var waterNormals = new THREE.ImageUtils.loadTexture('../assets/img/waternormals.jpg');
+		var waterNormals = new THREE.ImageUtils.loadTexture('assets/img/waternormals.jpg');
 		waterNormals.wrapS = waterNormals.wrapT = THREE.RepeatWrapping;
 
 		// Create the water effect
-		this.ms_Water = new THREE.Water(this.ms_Renderer, this.ms_Camera, this.ms_Scene, {
+/*		this.ms_Water = new THREE.Water(this.ms_Renderer, this.ms_Camera, this.ms_Scene, {
 			textureWidth: 256,
 			textureHeight: 256,
 			waterNormals: waterNormals,
