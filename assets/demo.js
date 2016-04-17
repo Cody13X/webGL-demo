@@ -1,10 +1,12 @@
+var clock = new THREE.Clock();
 var DEMO = {
 	ms_Canvas: null,
 	ms_Renderer: null,
 	ms_Camera: null,
 	ms_Scene: null,
-	ms_Controls: null,
+	//ms_Controls: null,
 	ms_Water: null,
+	ms_MovingBoat: null,
 
     enable: (function enable() {
         try {
@@ -20,16 +22,16 @@ var DEMO = {
 		this.ms_Canvas = $('#'+inIdCanvas);
 
 		// Initialize Renderer, Camera and Scene
-		this.ms_Renderer = this.enable? new THREE.WebGLRenderer() : new THREE.CanvasRenderer();
+		this.ms_Renderer = this.enable? new THREE.WebGLRenderer({antialias:true}) : new THREE.CanvasRenderer();
 		this.ms_Canvas.html(this.ms_Renderer.domElement);
 		this.ms_Scene = new THREE.Scene();
 
 		this.ms_Camera = new THREE.PerspectiveCamera(55.0, WINDOW.ms_Width / WINDOW.ms_Height, 0.5, 3000000);
 		this.ms_Camera.position.set(0, 10, -980);
-		this.ms_Camera.lookAt(new THREE.Vector3(0, 0, 0));
+		this.ms_Camera.lookAt(/*new THREE.Vector3(0, 0, 0)*/this.ms_Scene.position);
 
 		// Initialize Orbit control
-/*		this.ms_Controls = new THREE.OrbitControls(this.ms_Camera, this.ms_Renderer.domElement);*/
+		//this.ms_Controls = new THREE.OrbitControls(this.ms_Camera, this.ms_Renderer.domElement);
 
 		// Add light
 		var directionalLight = new THREE.DirectionalLight(0xffff55, 1);
@@ -64,6 +66,12 @@ var DEMO = {
 		this.loadSkyBox();
 
 		this.loadBoat(this.ms_Scene);
+
+//		window.addEventListener('keydown', handleKeyDown, false);
+	},
+
+	handleKeyDown: function handleKeyDown() {
+		alert('piouf');
 	},
 
 	loadBoat: function loadBoat(scene) {
@@ -89,6 +97,7 @@ var DEMO = {
 		//	mesh.rotation.y = -Math.PI/5;
 
 		  scene.add(mesh);
+			ms_MovingBoat = mesh;
 			var light = new THREE.AmbientLight(0xffffff);
     	scene.add(light);
 		});
@@ -133,6 +142,76 @@ var DEMO = {
 		this.ms_Water.material.uniforms.time.value += 1.0 / 60.0;
 /*		this.ms_Controls.update();*/
 		this.display();
+
+
+
+		var delta = clock.getDelta(); // seconds.
+		var moveDistance = 200 * delta; // 200 pixels per second
+		var rotateAngle = Math.PI / 2 * delta;   // pi/2 radians (90 degrees) per second
+
+		// local transformations
+
+		// move forwards/backwards/left/right
+/*		if ( keyboard.pressed("W") )
+			MovingCube.translateZ( -moveDistance );
+		if ( keyboard.pressed("S") )
+			MovingCube.translateZ(  moveDistance );
+		if ( keyboard.pressed("Q") )
+			MovingCube.translateX( -moveDistance );
+		if ( keyboard.pressed("E") )
+			MovingCube.translateX(  moveDistance );
+
+		// rotate left/right/up/down
+		var rotation_matrix = new THREE.Matrix4().identity();
+		if ( keyboard.pressed("A") )
+			MovingCube.rotateOnAxis( new THREE.Vector3(0,1,0), rotateAngle);
+		if ( keyboard.pressed("D") )
+			MovingCube.rotateOnAxis( new THREE.Vector3(0,1,0), -rotateAngle);
+		if ( keyboard.pressed("R") )
+			MovingCube.rotateOnAxis( new THREE.Vector3(1,0,0), rotateAngle);
+		if ( keyboard.pressed("F") )
+			MovingCube.rotateOnAxis( new THREE.Vector3(1,0,0), -rotateAngle);
+
+		if ( keyboard.pressed("Z") )
+		{
+			MovingCube.position.set(0,25.1,0);
+			MovingCube.rotation.set(0,0,0);
+		}*/
+
+		var relativeCameraOffset = new THREE.Vector3(0, 10, -20);
+
+		var cameraOffset = relativeCameraOffset.applyMatrix4( ms_MovingBoat.matrixWorld );
+
+		this.ms_Camera.position.x = cameraOffset.x;
+		this.ms_Camera.position.y = cameraOffset.y;
+		this.ms_Camera.position.z = cameraOffset.z;
+		this.ms_Camera.lookAt( ms_MovingBoat.position );
+	},
+
+	movingBoat: function movingBoat(key) {
+		var delta = clock.getDelta(); // seconds.
+		var moveDistance = 200 * delta; // 200 pixels per second
+		var rotateAngle = Math.PI / 2 * delta;   // pi/2 radians (90 degrees) per second
+		if ( key === 38 )
+			ms_MovingBoat.translateZ(  moveDistance );
+		if ( key === 40 )
+			ms_MovingBoat.translateZ(  -moveDistance );
+
+		// rotate left/right/up/down
+		var rotation_matrix = new THREE.Matrix4().identity();
+		if ( key === 37 )
+			ms_MovingBoat.rotateOnAxis( new THREE.Vector3(0,1,0), rotateAngle);
+		if ( key === 39 )
+			ms_MovingBoat.rotateOnAxis( new THREE.Vector3(0,1,0), -rotateAngle);
+
+		var relativeCameraOffset = new THREE.Vector3(0, 10, -20);
+
+		var cameraOffset = relativeCameraOffset.applyMatrix4( ms_MovingBoat.matrixWorld );
+
+		this.ms_Camera.position.x = cameraOffset.x;
+		this.ms_Camera.position.y = cameraOffset.y;
+		this.ms_Camera.position.z = cameraOffset.z;
+		this.ms_Camera.lookAt( ms_MovingBoat.position );
 	},
 
 	resize: function resize(inWidth, inHeight) {

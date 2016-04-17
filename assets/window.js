@@ -9,7 +9,7 @@ var WINDOW = {
 		this.updateSize();
 
 		// Create callbacks from keyboard
-		$(document).keydown(function(inEvent) { WINDOW.callAction(inEvent.keyCode); }) ;
+		$(document).keydown(function(inEvent) { WINDOW.callAction(inEvent.keyCode); });
 		$(window).resize(function(inEvent) {
 			WINDOW.updateSize();
 			WINDOW.resizeCallback(WINDOW.ms_Width, WINDOW.ms_Height);
@@ -20,9 +20,11 @@ var WINDOW = {
 		this.ms_Height = $(window).height() - 4;
 	},
 	callAction: function callAction(inId) {
+		DEMO.movingBoat(inId);
+
 		if(inId in this.ms_Callbacks) {
 			eval(this.ms_Callbacks[inId]);
-			return false ;
+			return false;
 		}
 	},
 	toggleFullScreen: function toggleFullScreen() {
