@@ -1,4 +1,5 @@
 var clock = new THREE.Clock();
+var keyboard = new THREEx.KeyboardState();
 var DEMO = {
 	ms_Canvas: null,
 	ms_Renderer: null,
@@ -7,6 +8,7 @@ var DEMO = {
 	//ms_Controls: null,
 	ms_Water: null,
 	ms_MovingBoat: null,
+	collidableMeshList: [],
 
     enable: (function enable() {
         try {
@@ -27,7 +29,7 @@ var DEMO = {
 		this.ms_Scene = new THREE.Scene();
 
 		this.ms_Camera = new THREE.PerspectiveCamera(55.0, WINDOW.ms_Width / WINDOW.ms_Height, 0.5, 3000000);
-		this.ms_Camera.position.set(0, 10, -980);
+		this.ms_Camera.position.set(0, 10, -970);
 		this.ms_Camera.lookAt(/*new THREE.Vector3(0, 0, 0)*/this.ms_Scene.position);
 
 		// Initialize Orbit control
@@ -65,19 +67,23 @@ var DEMO = {
 
 		this.loadSkyBox();
 
-		this.loadBoat(this.ms_Scene);
+		this.loadBoat(this.ms_Scene)
 
-//		window.addEventListener('keydown', handleKeyDown, false);
-	},
+		//
+		var wallGeometry = new THREE.CubeGeometry( 6, 6, 2, 1, 1, 1 );
+		var wallMaterial = new THREE.MeshBasicMaterial( {color: 0x8888ff} );
 
-	handleKeyDown: function handleKeyDown() {
-		alert('piouf');
+		var wall = new THREE.Mesh(wallGeometry, wallMaterial);
+		wall.position.set(0, 0, -100);
+		this.ms_Scene.add(wall);
+		this.collidableMeshList.push(wall);
+
 	},
 
 	loadBoat: function loadBoat(scene) {
 		var loader = new THREE.JSONLoader(); // init the loader util
 		// init loading
-		loader.load('assets/model/Boat.js', function (geometry, materials) {
+		loader.load('assets/model/Boat.js', function (geometry/*, materials*/) {
 			// create a new material
 //			var mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
 			var material = new THREE.MeshLambertMaterial({
@@ -97,7 +103,7 @@ var DEMO = {
 		//	mesh.rotation.y = -Math.PI/5;
 
 		  scene.add(mesh);
-			ms_MovingBoat = mesh;
+			this.ms_MovingBoat = mesh;
 			var light = new THREE.AmbientLight(0xffffff);
     	scene.add(light);
 		});
@@ -146,73 +152,65 @@ var DEMO = {
 
 
 		var delta = clock.getDelta(); // seconds.
-		var moveDistance = 200 * delta; // 200 pixels per second
-		var rotateAngle = Math.PI / 2 * delta;   // pi/2 radians (90 degrees) per second
+		var moveDistance = 2/*0 * delta*/; // 200 pixels per second
+		var rotateAngle = 0.005/*Math.PI / 16 * delta*/;   // pi/2 radians (90 degrees) per second
 
 		// local transformations
-
+	console.log("speed: "+moveDistance);
+	console.log("rot: "+rotateAngle);
+	//console.log(this.ms_MovingBoat);
 		// move forwards/backwards/left/right
 /*		if ( keyboard.pressed("W") )
-			MovingCube.translateZ( -moveDistance );
-		if ( keyboard.pressed("S") )
-			MovingCube.translateZ(  moveDistance );
-		if ( keyboard.pressed("Q") )
+			MovingCube.translateZ( -moveDistance );*/
+		if ( keyboard.pressed("up") ) {
+			ms_MovingBoat.translateZ(  moveDistance );
+
+
+			var relativeCameraOffset = new THREE.Vector3(0, 11.6, -18);
+			var cameraOffset = relativeCameraOffset.applyMatrix4( ms_MovingBoat.matrixWorld );
+
+			this.ms_Camera.position.x = cameraOffset.x;
+			this.ms_Camera.position.y = cameraOffset.y;
+			this.ms_Camera.position.z = cameraOffset.z;
+			//this.ms_Camera.lookAt( ms_MovingBoat.position );
+		}
+/*		if ( keyboard.pressed("Q") )
 			MovingCube.translateX( -moveDistance );
 		if ( keyboard.pressed("E") )
-			MovingCube.translateX(  moveDistance );
+			MovingCube.translateX(  moveDistance );*/
 
 		// rotate left/right/up/down
 		var rotation_matrix = new THREE.Matrix4().identity();
-		if ( keyboard.pressed("A") )
-			MovingCube.rotateOnAxis( new THREE.Vector3(0,1,0), rotateAngle);
-		if ( keyboard.pressed("D") )
-			MovingCube.rotateOnAxis( new THREE.Vector3(0,1,0), -rotateAngle);
-		if ( keyboard.pressed("R") )
-			MovingCube.rotateOnAxis( new THREE.Vector3(1,0,0), rotateAngle);
-		if ( keyboard.pressed("F") )
-			MovingCube.rotateOnAxis( new THREE.Vector3(1,0,0), -rotateAngle);
+		if ( keyboard.pressed("left") )
+			ms_MovingBoat.rotateOnAxis( new THREE.Vector3(0,1,0), rotateAngle);
+		if ( keyboard.pressed("right") )
+			ms_MovingBoat.rotateOnAxis( new THREE.Vector3(0,1,0), -rotateAngle);
 
-		if ( keyboard.pressed("Z") )
+
+/*		if ( keyboard.pressed("Z") )
 		{
 			MovingCube.position.set(0,25.1,0);
 			MovingCube.rotation.set(0,0,0);
 		}*/
 
-		var relativeCameraOffset = new THREE.Vector3(0, 10, -20);
+/*		var relativeCameraOffset = new THREE.Vector3(0, 11.6, -20);
+  //console.log(ms_MovingBoat);
 
 		var cameraOffset = relativeCameraOffset.applyMatrix4( ms_MovingBoat.matrixWorld );
 
-		this.ms_Camera.position.x = cameraOffset.x;
-		this.ms_Camera.position.y = cameraOffset.y;
-		this.ms_Camera.position.z = cameraOffset.z;
+		this.ms_Camera.position.x = cameraOffset.x;*/
+
+//	var posy = Math.sin( delta ) * 500 + this.ms_Camera.position.y/*250*/;
+	//console.log(posy);
+/*		this.ms_Camera.position.y = cameraOffset.y;
+		this.ms_Camera.position.z = cameraOffset.z;*/
 		this.ms_Camera.lookAt( ms_MovingBoat.position );
 	},
 
-	movingBoat: function movingBoat(key) {
-		var delta = clock.getDelta(); // seconds.
-		var moveDistance = 200 * delta; // 200 pixels per second
-		var rotateAngle = Math.PI / 2 * delta;   // pi/2 radians (90 degrees) per second
-		if ( key === 38 )
-			ms_MovingBoat.translateZ(  moveDistance );
-		if ( key === 40 )
-			ms_MovingBoat.translateZ(  -moveDistance );
+	/*movingBoat: function movingBoat() {
+		return ms_MovingBoat;
 
-		// rotate left/right/up/down
-		var rotation_matrix = new THREE.Matrix4().identity();
-		if ( key === 37 )
-			ms_MovingBoat.rotateOnAxis( new THREE.Vector3(0,1,0), rotateAngle);
-		if ( key === 39 )
-			ms_MovingBoat.rotateOnAxis( new THREE.Vector3(0,1,0), -rotateAngle);
-
-		var relativeCameraOffset = new THREE.Vector3(0, 10, -20);
-
-		var cameraOffset = relativeCameraOffset.applyMatrix4( ms_MovingBoat.matrixWorld );
-
-		this.ms_Camera.position.x = cameraOffset.x;
-		this.ms_Camera.position.y = cameraOffset.y;
-		this.ms_Camera.position.z = cameraOffset.z;
-		this.ms_Camera.lookAt( ms_MovingBoat.position );
-	},
+	},*/
 
 	resize: function resize(inWidth, inHeight) {
 		this.ms_Camera.aspect =  inWidth / inHeight;

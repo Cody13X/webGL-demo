@@ -20,8 +20,6 @@ var WINDOW = {
 		this.ms_Height = $(window).height() - 4;
 	},
 	callAction: function callAction(inId) {
-		DEMO.movingBoat(inId);
-
 		if(inId in this.ms_Callbacks) {
 			eval(this.ms_Callbacks[inId]);
 			return false;
