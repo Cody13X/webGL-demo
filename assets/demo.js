@@ -8,6 +8,8 @@ var DEMO = {
 	//ms_Controls: null,
 	ms_Water: null,
 	ms_MovingBoat: null,
+	Boat_up: true,
+	Boat_dwn: false,
 	collidableMeshList: [],
 
     enable: (function enable() {
@@ -29,7 +31,7 @@ var DEMO = {
 		this.ms_Scene = new THREE.Scene();
 
 		this.ms_Camera = new THREE.PerspectiveCamera(55.0, WINDOW.ms_Width / WINDOW.ms_Height, 0.5, 3000000);
-		this.ms_Camera.position.set(0, 10, -970);
+		this.ms_Camera.position.set(0, /*10*/6.4, -970);
 		this.ms_Camera.lookAt(/*new THREE.Vector3(0, 0, 0)*/this.ms_Scene.position);
 
 		// Initialize Orbit control
@@ -69,15 +71,55 @@ var DEMO = {
 
 		this.loadBoat(this.ms_Scene)
 
-		//
 		var wallGeometry = new THREE.CubeGeometry( 6, 6, 2, 1, 1, 1 );
 		var wallMaterial = new THREE.MeshBasicMaterial( {color: 0x8888ff} );
 
-		var wall = new THREE.Mesh(wallGeometry, wallMaterial);
-		wall.position.set(0, 0, -100);
-		this.ms_Scene.add(wall);
-		this.collidableMeshList.push(wall);
+		var wall1 = new THREE.Mesh(wallGeometry, wallMaterial);
+		x = Math.floor((Math.random() * 1300) -650);
+		z = Math.floor((Math.random() * 1300) -650);
+		wall1.position.set(x, 0, z);
+		wall1.name="pute";
+		this.ms_Scene.add(wall1);
+		this.collidableMeshList.push(wall1);
 
+		var wall2 = new THREE.Mesh(wallGeometry, wallMaterial);
+		x = Math.floor((Math.random() * 1300) -650);
+		z = Math.floor((Math.random() * 1300) -650);
+		wall2.position.set(x, 0, z);
+		wall2.name="popo";
+		this.ms_Scene.add(wall2);
+		this.collidableMeshList.push(wall2);
+
+		var wall3 = new THREE.Mesh(wallGeometry, wallMaterial);
+		x = Math.floor((Math.random() * 1300) -650);
+		wall3.position.set(x, 0, z);
+		wall3.name="push";
+		this.ms_Scene.add(wall3);
+		this.collidableMeshList.push(wall3);
+
+		var wall4 = new THREE.Mesh(wallGeometry, wallMaterial);
+		x = Math.floor((Math.random() * 1300) -650);
+		z = Math.floor((Math.random() * 1300) -650);
+		wall4.position.set(x, 0, z);
+		wall4.name="commit";
+		this.ms_Scene.add(wall4);
+		this.collidableMeshList.push(wall4);
+
+		var wall5 = new THREE.Mesh(wallGeometry, wallMaterial);
+		x = Math.floor((Math.random() * 1300) -650);
+		z = Math.floor((Math.random() * 1300) -650);
+		wall5.position.set(x, 0, z);
+		wall5.name="juliette";
+		this.ms_Scene.add(wall5);
+		this.collidableMeshList.push(wall5);
+
+		var wall6 = new THREE.Mesh(wallGeometry, wallMaterial);
+		x = Math.floor((Math.random() * 1300) -650);
+		z = Math.floor((Math.random() * 1300) -650);
+		wall6.position.set(x, 0, z);
+		wall6.name="pulko";
+		this.ms_Scene.add(wall6);
+		this.collidableMeshList.push(wall6);
 	},
 
 	loadBoat: function loadBoat(scene) {
@@ -146,7 +188,7 @@ var DEMO = {
 
 	update: function update() {
 		this.ms_Water.material.uniforms.time.value += 1.0 / 60.0;
-/*		this.ms_Controls.update();*/
+  	//this.ms_Controls.update();
 		this.display();
 
 
@@ -156,8 +198,6 @@ var DEMO = {
 		var rotateAngle = 0.005/*Math.PI / 16 * delta*/;   // pi/2 radians (90 degrees) per second
 
 		// local transformations
-	console.log("speed: "+moveDistance);
-	console.log("rot: "+rotateAngle);
 	//console.log(this.ms_MovingBoat);
 		// move forwards/backwards/left/right
 /*		if ( keyboard.pressed("W") )
@@ -166,13 +206,27 @@ var DEMO = {
 			ms_MovingBoat.translateZ(  moveDistance );
 
 
-			var relativeCameraOffset = new THREE.Vector3(0, 11.6, -18);
+			var relativeCameraOffset = new THREE.Vector3(0, 8, -18);
 			var cameraOffset = relativeCameraOffset.applyMatrix4( ms_MovingBoat.matrixWorld );
 
 			this.ms_Camera.position.x = cameraOffset.x;
 			this.ms_Camera.position.y = cameraOffset.y;
 			this.ms_Camera.position.z = cameraOffset.z;
-			//this.ms_Camera.lookAt( ms_MovingBoat.position );
+		}
+		else {
+			if(this.Boat_up && ms_MovingBoat.position.y < -1.5)
+				ms_MovingBoat.position.y += Math.sin(delta);
+			else {
+				this.Boat_up = false;
+				this.Boat_dwn = true;
+			}
+
+			if(this.Boat_dwn && ms_MovingBoat.position.y > -2.0)
+				ms_MovingBoat.position.y -= Math.sin(delta);
+			else {
+				this.Boat_up = true;
+				this.Boat_dwn = false;
+			}
 		}
 /*		if ( keyboard.pressed("Q") )
 			MovingCube.translateX( -moveDistance );
@@ -193,24 +247,25 @@ var DEMO = {
 			MovingCube.rotation.set(0,0,0);
 		}*/
 
-/*		var relativeCameraOffset = new THREE.Vector3(0, 11.6, -20);
-  //console.log(ms_MovingBoat);
 
-		var cameraOffset = relativeCameraOffset.applyMatrix4( ms_MovingBoat.matrixWorld );
-
-		this.ms_Camera.position.x = cameraOffset.x;*/
-
-//	var posy = Math.sin( delta ) * 500 + this.ms_Camera.position.y/*250*/;
-	//console.log(posy);
-/*		this.ms_Camera.position.y = cameraOffset.y;
-		this.ms_Camera.position.z = cameraOffset.z;*/
 		this.ms_Camera.lookAt( ms_MovingBoat.position );
+
+		// colision detection
+		var originPoint = ms_MovingBoat.position.clone();
+
+		for (var vertexIndex = 0; vertexIndex < /*ms_MovingBoat.geometry.vertices.length*/1800; vertexIndex++)
+		{
+				var localVertex = ms_MovingBoat.geometry.vertices[vertexIndex].clone();
+				var globalVertex = localVertex.applyMatrix4( ms_MovingBoat.matrix );
+				var directionVector = globalVertex.sub( ms_MovingBoat.position );
+
+				var ray = new THREE.Raycaster( originPoint, directionVector.clone().normalize() );
+				var collisionResults = ray.intersectObjects( this.collidableMeshList );
+				if ( collisionResults.length > 0 && collisionResults[0].distance < directionVector.length() )
+					/*appendText*/alert(collisionResults[0].object.name);
+		}
+
 	},
-
-	/*movingBoat: function movingBoat() {
-		return ms_MovingBoat;
-
-	},*/
 
 	resize: function resize(inWidth, inHeight) {
 		this.ms_Camera.aspect =  inWidth / inHeight;
