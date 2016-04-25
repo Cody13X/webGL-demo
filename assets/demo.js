@@ -128,8 +128,7 @@ var DEMO = {
 		this.ms_Scene.add(wall6);
 		this.collidableMeshList.push(wall6);
 
-		//setInterval(function() { makeTimer(); }, 1000);
-		cmp = setInterval('makeTimer();',3000);
+		cmp = setInterval('makeTimer();',2000);
 	},
 
 	loadBoat: function loadBoat(scene) {
@@ -201,8 +200,6 @@ var DEMO = {
   	//this.ms_Controls.update();
 		this.display();
 
-
-
 		var delta = clock.getDelta(); // seconds.
 		var moveDistance = 2/*0 * delta*/; // 200 pixels per second
 		var rotateAngle = 0.005/*Math.PI / 16 * delta*/;   // pi/2 radians (90 degrees) per second
@@ -213,26 +210,44 @@ var DEMO = {
 /*		if ( keyboard.pressed("W") )
 			MovingCube.translateZ( -moveDistance );*/
 		if ( keyboard.pressed("up") ) {
-			ms_MovingBoat.translateZ(  moveDistance );
+			//get back from floating
+			ms_MovingBoat.position.y = -1.6;
+			ms_MovingBoat.translateZ(moveDistance);
 
 
 			var relativeCameraOffset = new THREE.Vector3(0, 8, -18);
-			var cameraOffset = relativeCameraOffset.applyMatrix4( ms_MovingBoat.matrixWorld );
+			var cameraOffset = relativeCameraOffset.applyMatrix4(ms_MovingBoat.matrixWorld);
 
 			this.ms_Camera.position.x = cameraOffset.x;
 			this.ms_Camera.position.y = cameraOffset.y;
 			this.ms_Camera.position.z = cameraOffset.z;
-		}
+
+			// collision detection
+			var originPoint = ms_MovingBoat.position.clone();
+			for (var vertexIndex = 0; vertexIndex < /*ms_MovingBoat.geometry.vertices.length*/1800; vertexIndex++)
+			{
+					var localVertex = ms_MovingBoat.geometry.vertices[vertexIndex].clone();
+					var globalVertex = localVertex.applyMatrix4( ms_MovingBoat.matrix );
+					var directionVector = globalVertex.sub( ms_MovingBoat.position );
+
+					var ray = new THREE.Raycaster( originPoint, directionVector.clone().normalize() );
+					var collisionResults = ray.intersectObjects( this.collidableMeshList );
+					if ( collisionResults.length > 0 && collisionResults[0].distance < directionVector.length() ) {
+						this.removeEntity(collisionResults[0].object);
+						break;
+					}
+			}
+		}//keybord.pressed
 		else {
-			if(this.Boat_up && ms_MovingBoat.position.y < -1.5)
-				ms_MovingBoat.position.y += Math.sin(delta);
+			if(this.Boat_up && ms_MovingBoat.position.y < -1.3)
+				ms_MovingBoat.position.y += Math.sin(delta/4);
 			else {
 				this.Boat_up = false;
 				this.Boat_dwn = true;
 			}
 
-			if(this.Boat_dwn && ms_MovingBoat.position.y > -2.0)
-				ms_MovingBoat.position.y -= Math.sin(delta);
+			if(this.Boat_dwn && ms_MovingBoat.position.y > -1.65)
+				ms_MovingBoat.position.y -= Math.sin(delta/4);
 			else {
 				this.Boat_up = true;
 				this.Boat_dwn = false;
@@ -258,29 +273,22 @@ var DEMO = {
 		}*/
 
 
-		this.ms_Camera.lookAt( ms_MovingBoat.position );
+		this.ms_Camera.lookAt(ms_MovingBoat.position);
+	},
 
-		// colision detection
-		var originPoint = ms_MovingBoat.position.clone();
-var pute = "666";
-		for (var vertexIndex = 0; vertexIndex < /*ms_MovingBoat.geometry.vertices.length*/1800; vertexIndex++)
-		{
-				var localVertex = ms_MovingBoat.geometry.vertices[vertexIndex].clone();
-				var globalVertex = localVertex.applyMatrix4( ms_MovingBoat.matrix );
-				var directionVector = globalVertex.sub( ms_MovingBoat.position );
-
-				var ray = new THREE.Raycaster( originPoint, directionVector.clone().normalize() );
-				var collisionResults = ray.intersectObjects( this.collidableMeshList );
-				if ( collisionResults.length > 0 && collisionResults[0].distance < directionVector.length() ) {
-					cnt++;					
-					pute = collisionResults[0].object.name;
-					alert(pute);
-					break;
-				}
+	removeEntity: function removeEntity(object) {
+    var selectedObject = this.ms_Scene.getObjectByName(object.name);
+		// Avoid multiple collision response
+		if(selectedObject !== undefined) {
+    	this.ms_Scene.remove(selectedObject);
+			cnt++;
+			// score
+			var score = document.querySelector('#sval');
+			score.innerHTML = cnt;
+			// test final score
+			if(cnt === 6)
+				alert('YOU WIN !!!');
 		}
-		/*console.log(cnt);
-		if(cnt === 6)
-			alert("YOU WIN");*/
 	},
 
 	resize: function resize(inWidth, inHeight) {

@@ -6,13 +6,34 @@ function mainLoop() {
 $(function() {
 	WINDOW.initialize();
 
+  // Init timer
+  $("#timer")
+    .text("60")
+  .css(
+  {
+    "background":"rgba(0,0,0,0)", "opacity":"0.9",
+    "font-size":"40px",
+    "position":"absolute", "bottom":"0", "left":"4px"
+  });
+
+  // Init score
+  $("#score")
+  .css(
+  {
+    "background":"rgba(0,0,0,0)", "opacity":"0.9",
+    "font-size":"40px",
+    "position":"absolute", "bottom":"0px", "right":"0px"
+  });
+  $("#sval")
+    .text("0")
+  .css(
+  {
+    "background":"rgba(0,0,0,0)", "opacity":"0.9",
+    "font-size":"40px",
+    "position":"relative", "left":"3px"
+  })
+
 	DEMO.initialize('canvas-3d');
-
-  //Starts from time of page load
-/*$('#seconds').countdown({until: '+0h +0m +8s', format: 'HMS',onExpiry: liftOff,});
-
-//Counts by Date
-$('#seconds').countdown({until: new Date(2012, 11-1, 17, 10, 10, 10), format: 'HMS',onExpiry: liftOff,});*/
 
 	WINDOW.resizeCallback = function(inWidth, inHeight) { DEMO.resize(inWidth, inHeight); };
 	DEMO.resize(WINDOW.ms_Width, WINDOW.ms_Height);
