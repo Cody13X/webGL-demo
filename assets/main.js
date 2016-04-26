@@ -31,7 +31,7 @@ $(function() {
 
   });
   $("#sval")
-    .text("0/9")
+    .text("0/10")
   .css(
   {
     "background":"rgba(0,0,0,0)", "opacity":"0.9",

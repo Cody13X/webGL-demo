@@ -239,9 +239,9 @@ var DEMO = {
 			cnt++;
 			// score
 			var score = document.querySelector('#sval');
-			score.innerHTML = cnt+"/9";
+			score.innerHTML = cnt+"/10";
 			// test final score
-			if(cnt === 9) {
+			if(cnt === 10) {
 				alert('YOU WIN !!!');
 				var href = 'index.html';
 				$(location).attr('href', 'index.html');
