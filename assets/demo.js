@@ -76,59 +76,25 @@ var DEMO = {
 
 		this.loadBoat(this.ms_Scene)
 
-		// Load boxes
+		this.createWalls(10);
+
+		cmp = setInterval('makeTimer();',2000);
+	},
+
+	createWalls: function createWalls(nbr) {
 		var wallGeometry = new THREE.CubeGeometry( 6, 6, 2, 1, 1, 1 );
 		var wallTexture = new THREE.ImageUtils.loadTexture( 'assets/img/caisse.jpg' );
 		var wallMaterial = new THREE.MeshBasicMaterial( { map: wallTexture }  );
 
-		var wall1 = new THREE.Mesh(wallGeometry, wallMaterial);
-		x = Math.floor((Math.random() * 1300) -650);
-		z = Math.floor((Math.random() * 1300) -650);
-		wall1.position.set(x, 0, z);
-		wall1.name="wall1";
-		this.ms_Scene.add(wall1);
-		this.collidableMeshList.push(wall1);
-
-		var wall2 = new THREE.Mesh(wallGeometry, wallMaterial);
-		x = Math.floor((Math.random() * 1300) -650);
-		z = Math.floor((Math.random() * 1300) -650);
-		wall2.position.set(x, 0, z);
-		wall2.name="wall2";
-		this.ms_Scene.add(wall2);
-		this.collidableMeshList.push(wall2);
-
-		var wall3 = new THREE.Mesh(wallGeometry, wallMaterial);
-		x = Math.floor((Math.random() * 1300) -650);
-		wall3.position.set(x, 0, z);
-		wall3.name="wall3";
-		this.ms_Scene.add(wall3);
-		this.collidableMeshList.push(wall3);
-
-		var wall4 = new THREE.Mesh(wallGeometry, wallMaterial);
-		x = Math.floor((Math.random() * 1300) -650);
-		z = Math.floor((Math.random() * 1300) -650);
-		wall4.position.set(x, 0, z);
-		wall4.name="wall4";
-		this.ms_Scene.add(wall4);
-		this.collidableMeshList.push(wall4);
-
-		var wall5 = new THREE.Mesh(wallGeometry, wallMaterial);
-		x = Math.floor((Math.random() * 1300) -650);
-		z = Math.floor((Math.random() * 1300) -650);
-		wall5.position.set(x, 0, z);
-		wall5.name="wall5";
-		this.ms_Scene.add(wall5);
-		this.collidableMeshList.push(wall5);
-
-		var wall6 = new THREE.Mesh(wallGeometry, wallMaterial);
-		x = Math.floor((Math.random() * 1300) -650);
-		z = Math.floor((Math.random() * 1300) -650);
-		wall6.position.set(x, 0, z);
-		wall6.name="wall6";
-		this.ms_Scene.add(wall6);
-		this.collidableMeshList.push(wall6);
-
-		cmp = setInterval('makeTimer();',2000);
+		for(var i = 1; i<nbr+1; i++) {
+			var wall = new THREE.Mesh(wallGeometry, wallMaterial);
+			x = Math.floor((Math.random() * 1300) -650);
+			z = Math.floor((Math.random() * 1300) -650);
+			wall.position.set(x, 0, z);
+			wall.name="wall"+i;
+			this.ms_Scene.add(wall);
+			this.collidableMeshList.push(wall);
+		}
 	},
 
 	loadBoat: function loadBoat(scene) {
@@ -201,8 +167,8 @@ var DEMO = {
 		this.display();
 
 		var delta = clock.getDelta(); // seconds.
-		var moveDistance = 2/*0 * delta*/; // 200 pixels per second
-		var rotateAngle = 0.005/*Math.PI / 16 * delta*/;   // pi/2 radians (90 degrees) per second
+		var moveDistance = 4/*0 * delta*/; // 200 pixels per second
+		var rotateAngle = 0.025/*Math.PI / 16 * delta*/;   // pi/2 radians (90 degrees) per second
 
 		// local transformations
 	//console.log(this.ms_MovingBoat);
@@ -223,20 +189,7 @@ var DEMO = {
 			this.ms_Camera.position.z = cameraOffset.z;
 
 			// collision detection
-			var originPoint = ms_MovingBoat.position.clone();
-			for (var vertexIndex = 0; vertexIndex < /*ms_MovingBoat.geometry.vertices.length*/1800; vertexIndex++)
-			{
-					var localVertex = ms_MovingBoat.geometry.vertices[vertexIndex].clone();
-					var globalVertex = localVertex.applyMatrix4( ms_MovingBoat.matrix );
-					var directionVector = globalVertex.sub( ms_MovingBoat.position );
-
-					var ray = new THREE.Raycaster( originPoint, directionVector.clone().normalize() );
-					var collisionResults = ray.intersectObjects( this.collidableMeshList );
-					if ( collisionResults.length > 0 && collisionResults[0].distance < directionVector.length() ) {
-						this.removeEntity(collisionResults[0].object);
-						break;
-					}
-			}
+			this.testCollisions();
 		}//keybord.pressed
 		else {
 			if(this.Boat_up && ms_MovingBoat.position.y < -1.3)
@@ -260,11 +213,13 @@ var DEMO = {
 
 		// rotate left/right/up/down
 		var rotation_matrix = new THREE.Matrix4().identity();
-		if ( keyboard.pressed("left") )
+		if ( keyboard.pressed("left") ) {
 			ms_MovingBoat.rotateOnAxis( new THREE.Vector3(0,1,0), rotateAngle);
-		if ( keyboard.pressed("right") )
+			this.testCollisions();
+		} else if ( keyboard.pressed("right") ) {
 			ms_MovingBoat.rotateOnAxis( new THREE.Vector3(0,1,0), -rotateAngle);
-
+			this.testCollisions();
+		}
 
 /*		if ( keyboard.pressed("Z") )
 		{
@@ -284,10 +239,30 @@ var DEMO = {
 			cnt++;
 			// score
 			var score = document.querySelector('#sval');
-			score.innerHTML = cnt;
+			score.innerHTML = cnt+"/9";
 			// test final score
-			if(cnt === 6)
+			if(cnt === 9) {
 				alert('YOU WIN !!!');
+				var href = 'index.html';
+				$(location).attr('href', 'index.html');
+			}
+		}
+	},
+
+	testCollisions: function testCollisions() {
+		var originPoint = ms_MovingBoat.position.clone();
+		for (var vertexIndex = 0; vertexIndex < /*ms_MovingBoat.geometry.vertices.length*/1800; vertexIndex++)
+		{
+				var localVertex = ms_MovingBoat.geometry.vertices[vertexIndex].clone();
+				var globalVertex = localVertex.applyMatrix4( ms_MovingBoat.matrix );
+				var directionVector = globalVertex.sub( ms_MovingBoat.position );
+
+				var ray = new THREE.Raycaster( originPoint, directionVector.clone().normalize() );
+				var collisionResults = ray.intersectObjects( this.collidableMeshList );
+				if ( collisionResults.length > 0 && collisionResults[0].distance < directionVector.length() ) {
+					this.removeEntity(collisionResults[0].object);
+					break;
+				}
 		}
 	},
 
