@@ -83,7 +83,7 @@ var DEMO = {
 	},
 
 	createWalls: function createWalls(nbr) {
-		var wallGeometry = new THREE.CubeGeometry( 6, 6, 2, 1, 1, 1 );
+		var wallGeometry = new THREE.CubeGeometry( 6, 6, 6, 6, 6, 6 );
 		var wallTexture = new THREE.ImageUtils.loadTexture( 'assets/img/caisse.jpg' );
 		var wallMaterial = new THREE.MeshBasicMaterial( { map: wallTexture }  );
 
@@ -93,6 +93,8 @@ var DEMO = {
 			z = Math.floor((Math.random() * 1300) -650);
 			wall.position.set(x, 0, z);
 			wall.name="wall"+i;
+			wall.float_Up = true;
+			wall.float_Dwn = false;
 			this.ms_Scene.add(wall);
 			this.collidableMeshList.push(wall);
 		}
@@ -227,7 +229,7 @@ var DEMO = {
 			this.testCollisions();
 		}
 
-		//
+		// key released
 		if( !keyboard.pressed("up") && !keyboard.pressed("down") ) {
 			if(moveDistance > 0) {
 				if(this.Boat_dir === "Forward") {
@@ -274,7 +276,24 @@ var DEMO = {
 						this.Boat_dwn = false;
 					}
 			}
-		}//keyb
+		}//!keyb
+
+		for(var i = 0; i < this.collidableMeshList.length; i++) {
+//			console.log(this.collidableMeshList[0].float_Up);
+/*			if(this.collidableMeshList[i].float_up && ms_MovingBoat.position.y < -1.3)
+				ms_MovingBoat.position.y += Math.sin(delta/4);
+			else {
+				this.Boat_up = false;
+				this.Boat_dwn = true;
+			}
+
+		if(this.Boat_dwn && ms_MovingBoat.position.y > -1.65)
+			ms_MovingBoat.position.y -= Math.sin(delta/4);
+		else {
+			this.Boat_up = true;
+			this.Boat_dwn = false;
+		}*/
+		}
 
 		this.ms_Camera.lookAt(ms_MovingBoat.position);
 	},

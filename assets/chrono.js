@@ -3,54 +3,38 @@ function makeTimer() {
   var tmrVal = tmr.innerHTML;
   tmrVal = parseInt(tmrVal)-1;
   tmr.innerHTML = tmrVal;
-  if(tmrVal === parseInt("0")) {
+  if( tmrVal === parseInt("0") ) {
     // Game over alerts
-/*    if(cnt === 9) {
-      alert('de la merde');
+    if(cnt === 9)
+      alert('Si proche ! Et pourtant si loin...');
 
-    }
+    if(cnt === 8)
+      alert('Pas mal tu y es presque');
 
-    if(cnt === 9) {
-      alert('de la merde');
+    if(cnt === 7)
+      alert('Ca va trop vite ?');
 
-    }
+    if(cnt === 6)
+      alert("Je sais, c'est les caisses qui sont trop carrées");
 
-    if(cnt === 9) {
-      alert('de la merde');
+    if(cnt === 5)
+      alert('Waouh encore cinq et tu gagnais lol');
 
-    }
+    if(cnt === 4)
+      alert('Crampe du bras droit ?');
 
-    if(cnt === 9) {
-      alert('Ha ha ha presque');
+    if(cnt === 3)
+      alert("Tu n'étais pas chaud chaud c'est ça ?");
 
-    }
+    if(cnt === 2)
+      alert('Les jeux vidéo et toi ça fait deux');
 
-    if(cnt === 9) {
-      alert('de la merde');
+    if(cnt === 1)
+      alert('Mais tu es handicapé des doigts ou quoi ?');
 
-    }
+    if(cnt === 0)
+      alert('Change rien tu es le meilleur');
 
-    if(cnt === 9) {
-      alert('de la merde');
-
-    }
-
-    if(cnt === 9) {
-      alert('de la merde');
-
-    }
-
-    if(cnt === 9) {
-      alert('de la merde');
-
-    }*/
-
-
-    //release timer
-    clearInterval(cmp);
-  /*  var egme = document.querySelector('#endGame');
-    egme.innerHTML = "GAME OVER !";*/
-    alert("GAME OVER");
     var href = 'index.html';
     $(location).attr('href', 'index.html');
   }
