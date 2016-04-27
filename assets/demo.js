@@ -278,21 +278,22 @@ var DEMO = {
 			}
 		}//!keyb
 
+		//
 		for(var i = 0; i < this.collidableMeshList.length; i++) {
-//			console.log(this.collidableMeshList[0].float_Up);
-/*			if(this.collidableMeshList[i].float_up && ms_MovingBoat.position.y < -1.3)
-				ms_MovingBoat.position.y += Math.sin(delta/4);
+			//console.log(this.collidableMeshList[0].float_Up);
+			if(this.collidableMeshList[i].float_Up && this.collidableMeshList[i].position.y < 0.3)
+				this.collidableMeshList[i].position.y += Math.sin(delta/2);
 			else {
-				this.Boat_up = false;
-				this.Boat_dwn = true;
+				this.collidableMeshList[i].float_Up = false;
+				this.collidableMeshList[i].float_Dwn = true;
 			}
 
-		if(this.Boat_dwn && ms_MovingBoat.position.y > -1.65)
-			ms_MovingBoat.position.y -= Math.sin(delta/4);
-		else {
-			this.Boat_up = true;
-			this.Boat_dwn = false;
-		}*/
+			if(this.collidableMeshList[i].float_Dwn && this.collidableMeshList[i].position.y > -0.3)
+					this.collidableMeshList[i].position.y -= Math.sin(delta/2);
+			else {
+				this.collidableMeshList[i].float_Up = true;
+				this.collidableMeshList[i].float_Dwn = false;
+			}
 		}
 
 		this.ms_Camera.lookAt(ms_MovingBoat.position);
