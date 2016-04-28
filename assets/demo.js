@@ -265,7 +265,7 @@ var DEMO = {
 		}
 
 		// key released
-		if( !keyboard.pressed("up") && !keyboard.pressed("down") ) {
+		if( !keyboard.pressed("up") && !keyboard.pressed("down") && !keyboard.pressed("t") && !keyboard.pressed("v") ) {
 			if(moveDistance > 0) {
 				if(this.Boat_dir === "Forward") {
 					moveDistance -= .05;
