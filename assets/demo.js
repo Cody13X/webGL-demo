@@ -84,7 +84,7 @@ var DEMO = {
 		this.createWalls(10);
 
 		// add 3D text
-		var materialFront = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
+/*		var materialFront = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
 		var materialSide = new THREE.MeshBasicMaterial( { color: 0x000088 } );
 		var materialArray = [ materialFront, materialSide ];
 		var textGeom = new THREE.TextGeometry( "GAME OVER",
@@ -103,7 +103,7 @@ var DEMO = {
 		textGeom.computeBoundingBox();
 		var textWidth = textGeom.boundingBox.max.x - textGeom.boundingBox.min.x;
 
-		textMesh.position.set( -0.5 * textWidth, 25, 100 );
+		textMesh.position.set( -0.5 * textWidth, 25, 100 );*/
 
 		// Start timer
 		scene = this.ms_Scene;
@@ -229,6 +229,7 @@ var DEMO = {
 
 				// forward
 				this.Boat_dir = "Forward";
+				document.getElementById('xyz').play();
 			}
 			else if( keyboard.pressed("down") || keyboard.pressed("v") ) {
 				//get back from floating

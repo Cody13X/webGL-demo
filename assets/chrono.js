@@ -14,8 +14,8 @@ function makeTimer() {
 /*    var vec = new THREE.Vector3( 0, 0, -100 );
 vec.applyQuaternion( cam.quaternion );
 
-textMesh.position.copy( vec );*/
-    scene.add(textMesh);
+textMesh.position.copy( vec );
+    scene.add(textMesh);*/
 
     // Game over alerts
     if(cnt === 9)
