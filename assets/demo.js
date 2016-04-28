@@ -335,7 +335,7 @@ var DEMO = {
 		this.ms_Camera.lookAt(ms_MovingBoat.position);
 
 		// Stop player before reaching limits
-		if(ms_MovingBoat.position.x > 1000 || ms_MovingBoat.position.x < -1000 || ms_MovingBoat.position.z > 1000 || ms_MovingBoat.position.z < -1000) {
+		if(ms_MovingBoat.position.x > 1000 || ms_MovingBoat.position.x < -1000 || ms_MovingBoat.position.z > 1000 || ms_MovingBoat.position.z < -1000 && cnt !== 10) {
 			alert("Vous êtes mort désolé !");
 			var href = 'index.html';
 			$(location).attr('href', 'index.html');
