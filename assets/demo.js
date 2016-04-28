@@ -255,10 +255,10 @@ var DEMO = {
 
 			// rotate left/right/up/down
 			var rotation_matrix = new THREE.Matrix4().identity();
-			if ( keyboard.pressed("left") ) {
+			if ( keyboard.pressed("left") || keyboard.pressed("d") ) {
 				ms_MovingBoat.rotateOnAxis( new THREE.Vector3(0,1,0), rotateAngle);
 				this.testCollisions();
-			} else if ( keyboard.pressed("right") ) {
+			} else if ( keyboard.pressed("right") && keyboard.pressed("h")) {
 				ms_MovingBoat.rotateOnAxis( new THREE.Vector3(0,1,0), -rotateAngle);
 				this.testCollisions();
 			}
@@ -333,6 +333,7 @@ var DEMO = {
 
 		this.ms_Camera.lookAt(ms_MovingBoat.position);
 
+		// Stop player before reaching limits
 		if(ms_MovingBoat.position.x > 1000 || ms_MovingBoat.position.x < -1000 || ms_MovingBoat.position.z > 1000 || ms_MovingBoat.position.z < -1000) {
 			alert("Vous êtes mort désolé !");
 			var href = 'index.html';
