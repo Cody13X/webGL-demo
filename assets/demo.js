@@ -103,7 +103,7 @@ var DEMO = {
 		textGeom.computeBoundingBox();
 		var textWidth = textGeom.boundingBox.max.x - textGeom.boundingBox.min.x;
 
-		textMesh.position.set( -0.5 * textWidth, 25, 100 );
+	//	textMesh.position.set( -0.5 * textWidth, 25, 100 );
 
 		// Start timer
 		scene = this.ms_Scene;
@@ -365,7 +365,7 @@ var DEMO = {
 
 				swal({
 				title: "Bravo",
-				 text: "Vous êtes un vrai pilote! une autre partie ?",
+				 text: "Vous êtes un vrai pilote! Une autre partie ?",
 					type: "success"
 				},
 				function(){

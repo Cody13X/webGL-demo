@@ -10,7 +10,7 @@ function makeTimer() {
     var zCamVec = new THREE.Vector3(0,0,1);
     var position = cam.localToWorld(zCamVec);
     textMesh.position.set(position.x, /*position.y*/0, position.z);
-    textMesh.lookAt(cam);
+    textMesh.lookAt(position);
     scene.add(textMesh);
 
     // Game over alerts
