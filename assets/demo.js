@@ -349,7 +349,10 @@ var DEMO = {
 	removeEntity: function removeEntity(object) {
     var selectedObject = this.ms_Scene.getObjectByName(object.name);
 		// Avoid multiple collision response
-		if(selectedObject !== undefined) {
+		var tmr = document.querySelector('#timer');
+		var tmrVal = tmr.innerHTML;
+
+		if(selectedObject !== undefined && tmrVal !== parseInt("0") ) {
     	this.ms_Scene.remove(selectedObject);
 			cnt++;
 			// score
@@ -357,10 +360,6 @@ var DEMO = {
 			score.innerHTML = cnt+"/10";
 			// test final score
 			if(cnt === 10) {
-	/*			alert('YOU WIN !!!');
-				var href = 'index.html';
-				$(location).attr('href', 'index.html');*/
-
 				// Release timer
 				clearInterval(cmp);
 
