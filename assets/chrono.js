@@ -6,10 +6,13 @@ function makeTimer() {
   if( tmrVal === parseInt("0") ) {
     // Show the 3d game over text
     var cam = DEMO.pipo();
+    var zCamVec = new THREE.Vector3(0,0,1);
+    var position = camera.localToWorld(zCamVec);
+    textMesh.position.set(position.x, position.y, position.z);
 /*    textMesh.position.x = cam.x+400;
-    textMesh.position.z = cam.z+400;
-  //  textMesh.lookAt(cam);
-    scene.add(textMesh);*/
+    textMesh.position.z = cam.z+400;*/
+    textMesh.lookAt(cam);
+    scene.add(textMesh);
 
     // Game over alerts
     if(cnt === 9)
