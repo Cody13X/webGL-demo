@@ -11,10 +11,10 @@ function makeTimer() {
     var position = cam.localToWorld(zCamVec);
     textMesh.position.set(position.x,0, position.z);
     textMesh.lookAt(position);*/
-    var vec = new THREE.Vector3( 0, 0, -100 );
+/*    var vec = new THREE.Vector3( 0, 0, -100 );
 vec.applyQuaternion( cam.quaternion );
 
-textMesh.position.copy( vec );
+textMesh.position.copy( vec );*/
     scene.add(textMesh);
 
     // Game over alerts
