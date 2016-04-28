@@ -230,7 +230,7 @@ var DEMO = {
 				// forward
 				this.Boat_dir = "Forward";
 			}
-			else if( keyboard.pressed("down") ) {
+			else if( keyboard.pressed("down") || keyboard.pressed("v") ) {
 				//get back from floating
 				ms_MovingBoat.position.y = -1.6;
 				ms_MovingBoat.translateZ(-moveDistance);
