@@ -208,7 +208,7 @@ var DEMO = {
 
 		// move forwards/backwards/rotate left and right
 		if(cnt !== 10) {
-			if( keyboard.pressed("up") ) {
+			if( keyboard.pressed("up") || keyboard.pressed("T") ) {
 				//get back from floating
 				ms_MovingBoat.position.y = -1.6;
 				ms_MovingBoat.translateZ(moveDistance);
