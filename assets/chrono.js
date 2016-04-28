@@ -5,8 +5,8 @@ function makeTimer() {
   tmr.innerHTML = tmrVal;
   if( tmrVal === parseInt("0") ) {
     // Show the 3d game over text
-    var cam = DEMO.pipo();
-  /*  cam.updateProjectionMatrix();
+/*    var cam = DEMO.pipo();
+    cam.updateProjectionMatrix();
     var zCamVec = new THREE.Vector3(0,0,1);
     var position = cam.localToWorld(zCamVec);
     textMesh.position.set(position.x,0, position.z);
