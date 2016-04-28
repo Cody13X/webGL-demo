@@ -258,7 +258,7 @@ var DEMO = {
 			if ( keyboard.pressed("left") || keyboard.pressed("d") ) {
 				ms_MovingBoat.rotateOnAxis( new THREE.Vector3(0,1,0), rotateAngle);
 				this.testCollisions();
-			} else if ( keyboard.pressed("right") && keyboard.pressed("g")) {
+			} else if ( keyboard.pressed("right") && keyboard.pressed("k")) {
 				ms_MovingBoat.rotateOnAxis( new THREE.Vector3(0,1,0), -rotateAngle);
 				this.testCollisions();
 			}
