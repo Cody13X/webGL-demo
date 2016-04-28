@@ -6,11 +6,15 @@ function makeTimer() {
   if( tmrVal === parseInt("0") ) {
     // Show the 3d game over text
     var cam = DEMO.pipo();
-    cam.updateProjectionMatrix();
+  /*  cam.updateProjectionMatrix();
     var zCamVec = new THREE.Vector3(0,0,1);
     var position = cam.localToWorld(zCamVec);
-    textMesh.position.set(position.x, /*position.y*/0, position.z);
-    textMesh.lookAt(position);
+    textMesh.position.set(position.x,0, position.z);
+    textMesh.lookAt(position);*/
+    var vec = new THREE.Vector3( 0, 0, -100 );
+vec.applyQuaternion( cam.quaternion );
+
+textMesh.position.copy( vec );
     scene.add(textMesh);
 
     // Game over alerts
