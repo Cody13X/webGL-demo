@@ -4,6 +4,13 @@ function makeTimer() {
   tmrVal = parseInt(tmrVal)-1;
   tmr.innerHTML = tmrVal;
   if( tmrVal === parseInt("0") ) {
+    // Show the 3d game over text
+    var cam = DEMO.pipo();
+/*    textMesh.position.x = cam.x+400;
+    textMesh.position.z = cam.z+400;
+  //  textMesh.lookAt(cam);
+    scene.add(textMesh);*/
+
     // Game over alerts
     if(cnt === 9)
       alert('Si proche ! Et pourtant si loin...');
@@ -24,7 +31,7 @@ function makeTimer() {
       alert('Crampe du bras droit ?');
 
     if(cnt === 3)
-      alert("Tu n'étais pas chaud chaud c'est ça ?");
+      alert("Tu n'étais pas très chaud chaud c'est ça ?");
 
     if(cnt === 2)
       alert('Les jeux vidéo et toi ça fait deux');
@@ -35,7 +42,18 @@ function makeTimer() {
     if(cnt === 0)
       alert('Change rien tu es le meilleur');
 
-    var href = 'index.html';
-    $(location).attr('href', 'index.html');
+/*    var href = 'index.html';
+    $(location).attr('href', 'index.html');*/
+    // Release timer
+    clearInterval(cmp);
+
+    swal({
+      title: '',
+      text: 'Replay ?',
+      imageUrl: 'css/gameover.png',
+    },
+    function(){
+     window.location.href = 'index.html';
+   });
   }
 }

@@ -1,10 +1,14 @@
 var clock = new THREE.Clock();
 var keyboard = new THREEx.KeyboardState();
+
 //timer
 var cmp = 0;
 //counter
 var cnt = 0;
 var moveDistance = 0.01;
+var scene = null;
+var textMesh = null;
+
 var DEMO = {
 	ms_Canvas: null,
 	ms_Renderer: null,
@@ -79,7 +83,36 @@ var DEMO = {
 
 		this.createWalls(10);
 
+		// add 3D text
+		var materialFront = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
+		var materialSide = new THREE.MeshBasicMaterial( { color: 0x000088 } );
+		var materialArray = [ materialFront, materialSide ];
+		var textGeom = new THREE.TextGeometry( "GAME OVER",
+		{
+			size: 30, height: 4, curveSegments: 3,
+			font: "helvetiker", weight: "bold", style: "normal",
+			bevelThickness: 1, bevelSize: 2, bevelEnabled: true,
+			material: 0, extrudeMaterial: 1
+		});
+		// font: helvetiker, gentilis, droid sans, droid serif, optimer
+		// weight: normal, bold
+
+		var textMaterial = new THREE.MeshFaceMaterial(materialArray);
+		textMesh = new THREE.Mesh(textGeom, textMaterial );
+
+		textGeom.computeBoundingBox();
+		var textWidth = textGeom.boundingBox.max.x - textGeom.boundingBox.min.x;
+
+		textMesh.position.set( -0.5 * textWidth, 25, 100 );
+
+		// Start timer
+		scene = this.ms_Scene;
 		cmp = setInterval('makeTimer();', 2000);
+	},
+
+	pipo: function pipo() {
+		var campos = this.ms_Camera.position;
+		return campos;
 	},
 
 	createWalls: function createWalls(nbr) {
@@ -174,59 +207,61 @@ var DEMO = {
 		var rotateAngle = 0.025/*Math.PI / 16 * delta*/;   // pi/2 radians (90 degrees) per second
 
 		// move forwards/backwards/rotate left and right
-		if( keyboard.pressed("up") ) {
-			//get back from floating
-			ms_MovingBoat.position.y = -1.6;
-			ms_MovingBoat.translateZ(moveDistance);
+		if(cnt !== 10) {
+			if( keyboard.pressed("up") ) {
+				//get back from floating
+				ms_MovingBoat.position.y = -1.6;
+				ms_MovingBoat.translateZ(moveDistance);
 
-			var relativeCameraOffset = new THREE.Vector3(0, 8, -16/*18*/);
-			var cameraOffset = relativeCameraOffset.applyMatrix4(ms_MovingBoat.matrixWorld);
+				var relativeCameraOffset = new THREE.Vector3(0, 8, -16/*18*/);
+				var cameraOffset = relativeCameraOffset.applyMatrix4(ms_MovingBoat.matrixWorld);
 
-			this.ms_Camera.position.x = cameraOffset.x;
-			this.ms_Camera.position.y = cameraOffset.y;
-			this.ms_Camera.position.z = cameraOffset.z;
+				this.ms_Camera.position.x = cameraOffset.x;
+				this.ms_Camera.position.y = cameraOffset.y;
+				this.ms_Camera.position.z = cameraOffset.z;
 
-			// collision detection
-			this.testCollisions();
+				// collision detection
+				this.testCollisions();
 
-			// Acceleration speed
-			if(moveDistance < 4)
-				moveDistance += .01;
+				// Acceleration speed
+				if(moveDistance < 4)
+					moveDistance += .01;
 
-			// forward
-			this.Boat_dir = "Forward";
-		}
-		else if( keyboard.pressed("down") ) {
-			//get back from floating
-			ms_MovingBoat.position.y = -1.6;
-			ms_MovingBoat.translateZ(-moveDistance);
+				// forward
+				this.Boat_dir = "Forward";
+			}
+			else if( keyboard.pressed("down") ) {
+				//get back from floating
+				ms_MovingBoat.position.y = -1.6;
+				ms_MovingBoat.translateZ(-moveDistance);
 
-			var relativeCameraOffset = new THREE.Vector3(0, 8, -22);
-			var cameraOffset = relativeCameraOffset.applyMatrix4(ms_MovingBoat.matrixWorld);
+				var relativeCameraOffset = new THREE.Vector3(0, 8, -22);
+				var cameraOffset = relativeCameraOffset.applyMatrix4(ms_MovingBoat.matrixWorld);
 
-			this.ms_Camera.position.x = cameraOffset.x;
-			this.ms_Camera.position.y = cameraOffset.y;
-			this.ms_Camera.position.z = cameraOffset.z;
+				this.ms_Camera.position.x = cameraOffset.x;
+				this.ms_Camera.position.y = cameraOffset.y;
+				this.ms_Camera.position.z = cameraOffset.z;
 
-			// collision detection
-			this.testCollisions();
+				// collision detection
+				this.testCollisions();
 
-			// Acceleration speed
-			if(moveDistance < 2)
-				moveDistance += .01;
+				// Acceleration speed
+				if(moveDistance < 2)
+					moveDistance += .01;
 
-			// backward
-			this.Boat_dir = "Backward";
-		}
+				// backward
+				this.Boat_dir = "Backward";
+			}
 
-		// rotate left/right/up/down
-		var rotation_matrix = new THREE.Matrix4().identity();
-		if ( keyboard.pressed("left") ) {
-			ms_MovingBoat.rotateOnAxis( new THREE.Vector3(0,1,0), rotateAngle);
-			this.testCollisions();
-		} else if ( keyboard.pressed("right") ) {
-			ms_MovingBoat.rotateOnAxis( new THREE.Vector3(0,1,0), -rotateAngle);
-			this.testCollisions();
+			// rotate left/right/up/down
+			var rotation_matrix = new THREE.Matrix4().identity();
+			if ( keyboard.pressed("left") ) {
+				ms_MovingBoat.rotateOnAxis( new THREE.Vector3(0,1,0), rotateAngle);
+				this.testCollisions();
+			} else if ( keyboard.pressed("right") ) {
+				ms_MovingBoat.rotateOnAxis( new THREE.Vector3(0,1,0), -rotateAngle);
+				this.testCollisions();
+			}
 		}
 
 		// key released
@@ -278,7 +313,7 @@ var DEMO = {
 			}
 		}//!keyb
 
-		//
+		// Walls floating
 		for(var i = 0; i < this.collidableMeshList.length; i++) {
 			//console.log(this.collidableMeshList[0].float_Up);
 			if(this.collidableMeshList[i].float_Up && this.collidableMeshList[i].position.y < 0.3)
@@ -297,6 +332,16 @@ var DEMO = {
 		}
 
 		this.ms_Camera.lookAt(ms_MovingBoat.position);
+
+		if(ms_MovingBoat.position.x > 1000 || ms_MovingBoat.position.x < -1000 || ms_MovingBoat.position.z > 1000 || ms_MovingBoat.position.z < -1000) {
+			alert("Vous êtes mort désolé !");
+			var href = 'index.html';
+			$(location).attr('href', 'index.html');
+		}
+
+		//Good bye boat
+		if(cnt === 10)
+			ms_MovingBoat.position.z++;
 	},
 
 	removeEntity: function removeEntity(object) {
@@ -310,9 +355,21 @@ var DEMO = {
 			score.innerHTML = cnt+"/10";
 			// test final score
 			if(cnt === 10) {
-				alert('YOU WIN !!!');
+	/*			alert('YOU WIN !!!');
 				var href = 'index.html';
-				$(location).attr('href', 'index.html');
+				$(location).attr('href', 'index.html');*/
+
+				// Release timer
+				clearInterval(cmp);
+
+				swal({
+				title: "Bravo",
+				 text: "Vous êtes un vrai pilote! une autre partie ?",
+					type: "success"
+				},
+				function(){
+					window.location.href = 'index.html';
+				});
 			}
 		}
 	},
