@@ -7,10 +7,8 @@ function makeTimer() {
     // Show the 3d game over text
     var cam = DEMO.pipo();
     var zCamVec = new THREE.Vector3(0,0,1);
-    var position = camera.localToWorld(zCamVec);
-    textMesh.position.set(position.x, position.y, position.z);
-/*    textMesh.position.x = cam.x+400;
-    textMesh.position.z = cam.z+400;*/
+    var position = cam.localToWorld(zCamVec);
+    textMesh.position.set(position.x, /*position.y*/0, position.z);
     textMesh.lookAt(cam);
     scene.add(textMesh);
 

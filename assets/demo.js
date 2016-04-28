@@ -111,8 +111,8 @@ var DEMO = {
 	},
 
 	pipo: function pipo() {
-		var campos = this.ms_Camera.position;
-		return campos;
+		var cam = this.ms_Camera;
+		return cam;
 	},
 
 	createWalls: function createWalls(nbr) {
