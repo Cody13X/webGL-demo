@@ -31,7 +31,7 @@ $(function() {
 
     // Init timer
     $("#timer")
-      .text("20")
+      .text("80")
     .css(
     {
       "background":"rgba(0,0,0,0)", "opacity":"0.9",

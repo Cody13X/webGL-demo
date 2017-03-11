@@ -84,7 +84,7 @@ var DEMO = {
 		this.createWalls(10);
 
 		// add 3D text
-		var materialFront = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
+/*		var materialFront = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
 		var materialSide = new THREE.MeshBasicMaterial( { color: 0x000088 } );
 		var materialArray = [ materialFront, materialSide ];
 		var textGeom = new THREE.TextGeometry( "GAME OVER",
@@ -103,7 +103,7 @@ var DEMO = {
 		textGeom.computeBoundingBox();
 		var textWidth = textGeom.boundingBox.max.x - textGeom.boundingBox.min.x;
 
-	//	textMesh.position.set( -0.5 * textWidth, 25, 100 );
+		textMesh.position.set( -0.5 * textWidth, 25, 100 );*/
 
 		// Start timer
 		scene = this.ms_Scene;
@@ -229,6 +229,7 @@ var DEMO = {
 
 				// forward
 				this.Boat_dir = "Forward";
+				document.getElementById('xyz').play();
 			}
 			else if( keyboard.pressed("down") || keyboard.pressed("v") ) {
 				//get back from floating
@@ -334,7 +335,9 @@ var DEMO = {
 		this.ms_Camera.lookAt(ms_MovingBoat.position);
 
 		// Stop player before reaching limits
-		if(ms_MovingBoat.position.x > 1000 || ms_MovingBoat.position.x < -1000 || ms_MovingBoat.position.z > 1000 || ms_MovingBoat.position.z < -1000) {
+		var tmr = document.querySelector('#timer');
+		var tmrVal = tmr.innerHTML;
+		if(ms_MovingBoat.position.x > 1000 || ms_MovingBoat.position.x < -1000 || ms_MovingBoat.position.z > 1000 || ms_MovingBoat.position.z < -1000 && tmrVal !== parseInt("0") ) {
 			alert("Vous êtes mort désolé !");
 			var href = 'index.html';
 			$(location).attr('href', 'index.html');
@@ -348,7 +351,10 @@ var DEMO = {
 	removeEntity: function removeEntity(object) {
     var selectedObject = this.ms_Scene.getObjectByName(object.name);
 		// Avoid multiple collision response
-		if(selectedObject !== undefined) {
+		var tmr = document.querySelector('#timer');
+		var tmrVal = tmr.innerHTML;
+
+		if(selectedObject !== undefined && tmrVal !== parseInt("0") ) {
     	this.ms_Scene.remove(selectedObject);
 			cnt++;
 			// score
@@ -356,10 +362,6 @@ var DEMO = {
 			score.innerHTML = cnt+"/10";
 			// test final score
 			if(cnt === 10) {
-	/*			alert('YOU WIN !!!');
-				var href = 'index.html';
-				$(location).attr('href', 'index.html');*/
-
 				// Release timer
 				clearInterval(cmp);
 
