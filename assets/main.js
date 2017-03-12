@@ -42,9 +42,10 @@ $(function() {
       "position":"absolute","bottom":2,"left":"10px",
       "padding": '1%',
     });
+
+    $('#canvas-3d').append('<embed height="50" width="300" src="sond2.mp3" loop="true" autoplay="true" style="position:absolute">');
   });
 
-$('#canvas-3d').append('<embed height="50" width="300" src="sond2.mp3">');
 	DEMO.initialize('canvas-3d');
 
 	WINDOW.resizeCallback = function(inWidth, inHeight) { DEMO.resize(inWidth, inHeight); };
