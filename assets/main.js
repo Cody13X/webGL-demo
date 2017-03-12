@@ -44,6 +44,7 @@ $(function() {
     });
   });
 
+$('#canvas-3d').append('<embed height="50" width="300" src="sond2.mp3">');
 	DEMO.initialize('canvas-3d');
 
 	WINDOW.resizeCallback = function(inWidth, inHeight) { DEMO.resize(inWidth, inHeight); };
