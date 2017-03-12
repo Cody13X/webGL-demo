@@ -8,9 +8,10 @@ $(function() {
 
   // Start game
   $('#start').on('click',function(){
+    $('embed').attr('src', 'sond2.mp3');
     $('.menu').addClass('hide');
-        // Init score
-        $("#score")
+    // Init score
+    $("#score")
         .css(
         {
           "background":"rgba(0,0,0,0)", "opacity":"0.9",
