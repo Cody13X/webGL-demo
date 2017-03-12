@@ -8,7 +8,7 @@ $(function() {
 
   // Start game
   $('#start').on('click',function(){
-    $('embed').attr('src', 'sond2.mp3');
+    $('#intro').remove();
     $('.menu').addClass('hide');
     // Init score
     $("#score")
