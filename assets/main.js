@@ -43,7 +43,7 @@ $(function() {
       "padding": '1%',
     });
 
-    $('#canvas-3d').append('<embed height="50" width="300" src="sond2.mp3" loop="true" autoplay="true" style="position:absolute">');
+    $('#playermp3').append('<embed height="50" width="300" src="sond2.mp3" loop="true" autoplay="true" style="position:absolute">');
   });
 
 	DEMO.initialize('canvas-3d');
