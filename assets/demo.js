@@ -229,7 +229,7 @@ var DEMO = {
 
 				// forward
 				this.Boat_dir = "Forward";
-				document.getElementById('xyz').play();
+//				document.getElementById('xyz').play();
 			}
 			else if( keyboard.pressed("down") || keyboard.pressed("v") ) {
 				//get back from floating
