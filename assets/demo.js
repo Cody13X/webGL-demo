@@ -208,7 +208,7 @@ var DEMO = {
 
 		// move forwards/backwards/rotate left and right
 		if(cnt !== 10) {
-			if( keyboard.pressed("up") || keyboard.pressed("T") ) {
+			if( keyboard.pressed("up")/* || keyboard.pressed("T")*/ ) {
 				//get back from floating
 				ms_MovingBoat.position.y = -1.6;
 				ms_MovingBoat.translateZ(moveDistance);
@@ -231,7 +231,7 @@ var DEMO = {
 				this.Boat_dir = "Forward";
 //				document.getElementById('xyz').play();
 			}
-			else if( keyboard.pressed("down") || keyboard.pressed("v") ) {
+			else if( keyboard.pressed("down")/* || keyboard.pressed("v")*/ ) {
 				//get back from floating
 				ms_MovingBoat.position.y = -1.6;
 				ms_MovingBoat.translateZ(-moveDistance);
@@ -256,17 +256,17 @@ var DEMO = {
 
 			// rotate left/right/up/down
 			var rotation_matrix = new THREE.Matrix4().identity();
-			if ( keyboard.pressed("left") || keyboard.pressed("d") ) {
+			if ( keyboard.pressed("left")/* || keyboard.pressed("d")*/ ) {
 				ms_MovingBoat.rotateOnAxis( new THREE.Vector3(0,1,0), rotateAngle);
 				this.testCollisions();
-			} else if ( keyboard.pressed("right") || keyboard.pressed("j")) {
+			} else if ( keyboard.pressed("right")/* || keyboard.pressed("j")*/) {
 				ms_MovingBoat.rotateOnAxis( new THREE.Vector3(0,1,0), -rotateAngle);
 				this.testCollisions();
 			}
 		}
 
 		// key released
-		if( !keyboard.pressed("up") && !keyboard.pressed("down") && !keyboard.pressed("t") && !keyboard.pressed("v") ) {
+		if( !keyboard.pressed("up") && !keyboard.pressed("down")/* && !keyboard.pressed("t") && !keyboard.pressed("v")*/ ) {
 			if(moveDistance > 0) {
 				if(this.Boat_dir === "Forward") {
 					moveDistance -= .05;
