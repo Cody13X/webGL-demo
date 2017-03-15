@@ -210,11 +210,11 @@ var DEMO = {
 		if(cnt !== 10) {
 			if( keyboard.pressed("up")/* || keyboard.pressed("T")*/ ) {
 				//get back from floating
-/*				ms_MovingBoat.position.y = -1.6;
-				ms_MovingBoat.translateZ(moveDistance);*/
+				ms_MovingBoat.position.y = -1.6;
+				ms_MovingBoat.translateZ(moveDistance);
 
-//				var relativeCameraOffset = new THREE.Vector3(0, 8, -16/*18*/);
-/*				var cameraOffset = relativeCameraOffset.applyMatrix4(ms_MovingBoat.matrixWorld);
+				var relativeCameraOffset = new THREE.Vector3(0, 8, -16/*18*/);
+				var cameraOffset = relativeCameraOffset.applyMatrix4(ms_MovingBoat.matrixWorld);
 
 				this.ms_Camera.position.x = cameraOffset.x;
 				this.ms_Camera.position.y = cameraOffset.y;
@@ -229,7 +229,7 @@ var DEMO = {
 
 				// forward
 				this.Boat_dir = "Forward";
-				//document.getElementById('xyz').play();*/
+				//document.getElementById('xyz').play();
 			}
 			else if( keyboard.pressed("down")/* || keyboard.pressed("v")*/ ) {
 				//get back from floating
