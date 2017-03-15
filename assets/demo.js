@@ -203,18 +203,18 @@ var DEMO = {
 		this.display();
 
 		var delta = clock.getDelta(); // seconds.
-//		var moveDistance = 4/*0 * delta*/; // 200 pixels per second
+		//var moveDistance = 4/*0 * delta*/; // 200 pixels per second
 		var rotateAngle = 0.025/*Math.PI / 16 * delta*/;   // pi/2 radians (90 degrees) per second
 
 		// move forwards/backwards/rotate left and right
 		if(cnt !== 10) {
 			if( keyboard.pressed("up")/* || keyboard.pressed("T")*/ ) {
 				//get back from floating
-				ms_MovingBoat.position.y = -1.6;
-				ms_MovingBoat.translateZ(moveDistance);
+/*				ms_MovingBoat.position.y = -1.6;
+				ms_MovingBoat.translateZ(moveDistance);*/
 
-				var relativeCameraOffset = new THREE.Vector3(0, 8, -16/*18*/);
-				var cameraOffset = relativeCameraOffset.applyMatrix4(ms_MovingBoat.matrixWorld);
+//				var relativeCameraOffset = new THREE.Vector3(0, 8, -16/*18*/);
+/*				var cameraOffset = relativeCameraOffset.applyMatrix4(ms_MovingBoat.matrixWorld);
 
 				this.ms_Camera.position.x = cameraOffset.x;
 				this.ms_Camera.position.y = cameraOffset.y;
@@ -229,11 +229,11 @@ var DEMO = {
 
 				// forward
 				this.Boat_dir = "Forward";
-//				document.getElementById('xyz').play();
+				//document.getElementById('xyz').play();*/
 			}
 			else if( keyboard.pressed("down")/* || keyboard.pressed("v")*/ ) {
 				//get back from floating
-				ms_MovingBoat.position.y = -1.6;
+/*				ms_MovingBoat.position.y = -1.6;
 				ms_MovingBoat.translateZ(-moveDistance);
 
 				var relativeCameraOffset = new THREE.Vector3(0, 8, -22);
@@ -251,17 +251,17 @@ var DEMO = {
 					moveDistance += .01;
 
 				// backward
-				this.Boat_dir = "Backward";
+				this.Boat_dir = "Backward";*/
 			}
 
 			// rotate left/right/up/down
 			var rotation_matrix = new THREE.Matrix4().identity();
 			if ( keyboard.pressed("left")/* || keyboard.pressed("d")*/ ) {
-				ms_MovingBoat.rotateOnAxis( new THREE.Vector3(0,1,0), rotateAngle);
-				this.testCollisions();
+/*				ms_MovingBoat.rotateOnAxis( new THREE.Vector3(0,1,0), rotateAngle);
+				this.testCollisions();*/
 			} else if ( keyboard.pressed("right")/* || keyboard.pressed("j")*/) {
-				ms_MovingBoat.rotateOnAxis( new THREE.Vector3(0,1,0), -rotateAngle);
-				this.testCollisions();
+/*				ms_MovingBoat.rotateOnAxis( new THREE.Vector3(0,1,0), -rotateAngle);
+				this.testCollisions();*/
 			}
 		}
 
@@ -269,7 +269,7 @@ var DEMO = {
 		if( !keyboard.pressed("up") && !keyboard.pressed("down")/* && !keyboard.pressed("t") && !keyboard.pressed("v")*/ ) {
 			if(moveDistance > 0) {
 				if(this.Boat_dir === "Forward") {
-					moveDistance -= .05;
+/*					moveDistance -= .05;
 					ms_MovingBoat.translateZ(moveDistance);
 
 					var relativeCameraOffset = new THREE.Vector3(0, 8, -16);
@@ -280,10 +280,10 @@ var DEMO = {
 					this.ms_Camera.position.z = cameraOffset.z;
 
 					// collision detection
-					this.testCollisions();
+					this.testCollisions();*/
 				}
 				else {
-					moveDistance -= .05;
+/*					moveDistance -= .05;
 					ms_MovingBoat.translateZ(-moveDistance);
 
 					var relativeCameraOffset = new THREE.Vector3(0, 8, -22);
@@ -294,11 +294,11 @@ var DEMO = {
 					this.ms_Camera.position.z = cameraOffset.z;
 
 					// collision detection
-					this.testCollisions();
+					this.testCollisions();*/
 				}
 			}//move
 			else {//floating boat
-					if(this.Boat_up && ms_MovingBoat.position.y < -1.3)
+/*					if(this.Boat_up && ms_MovingBoat.position.y < -1.3)
 						ms_MovingBoat.position.y += Math.sin(delta/4);
 					else {
 						this.Boat_up = false;
@@ -310,7 +310,7 @@ var DEMO = {
 					else {
 						this.Boat_up = true;
 						this.Boat_dwn = false;
-					}
+					}*/
 			}
 		}//!keyb
 
@@ -337,7 +337,7 @@ var DEMO = {
 		// Stop player before reaching limits
 		var tmr = document.querySelector('#timer');
 		var tmrVal = tmr.innerHTML;
-		if(ms_MovingBoat.position.x > 1000 || ms_MovingBoat.position.x < -1000 || ms_MovingBoat.position.z > 1000 || ms_MovingBoat.position.z < -1000 && tmrVal !== parseInt("0") ) {
+/*		if(ms_MovingBoat.position.x > 1000 || ms_MovingBoat.position.x < -1000 || ms_MovingBoat.position.z > 1000 || ms_MovingBoat.position.z < -1000 && tmrVal !== parseInt("0") ) {
 			alert("Vous êtes mort désolé !");
 			var href = 'index.html';
 			$(location).attr('href', 'index.html');
@@ -345,7 +345,7 @@ var DEMO = {
 
 		//Good bye boat
 		if(cnt === 10)
-			ms_MovingBoat.position.z++;
+			ms_MovingBoat.position.z++;*/
 	},
 
 	removeEntity: function removeEntity(object) {
@@ -378,9 +378,9 @@ var DEMO = {
 	},
 
 	testCollisions: function testCollisions() {
-		var originPoint = ms_MovingBoat.position.clone();
-		for (var vertexIndex = 0; vertexIndex < /*ms_MovingBoat.geometry.vertices.length*/1800; vertexIndex++)
-		{
+/*		var originPoint = ms_MovingBoat.position.clone();*/
+//		for (var vertexIndex = 0; vertexIndex < /*ms_MovingBoat.geometry.vertices.length*/1800; vertexIndex++)
+/*		{
 				var localVertex = ms_MovingBoat.geometry.vertices[vertexIndex].clone();
 				var globalVertex = localVertex.applyMatrix4( ms_MovingBoat.matrix );
 				var directionVector = globalVertex.sub( ms_MovingBoat.position );
@@ -391,7 +391,7 @@ var DEMO = {
 					this.removeEntity(collisionResults[0].object);
 					break;
 				}
-		}
+		}*/
 	},
 
 	resize: function resize(inWidth, inHeight) {

@@ -1,6 +1,6 @@
 function mainLoop() {
-/*    requestAnimationFrame(mainLoop);
-    DEMO.update();*/
+    requestAnimationFrame(mainLoop);
+    DEMO.update();
 }
 
 $(function() {
