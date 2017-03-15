@@ -233,7 +233,7 @@ var DEMO = {
 			}
 			else if( keyboard.pressed("down")/* || keyboard.pressed("v")*/ ) {
 				//get back from floating
-/*				ms_MovingBoat.position.y = -1.6;
+				ms_MovingBoat.position.y = -1.6;
 				ms_MovingBoat.translateZ(-moveDistance);
 
 				var relativeCameraOffset = new THREE.Vector3(0, 8, -22);
@@ -251,7 +251,7 @@ var DEMO = {
 					moveDistance += .01;
 
 				// backward
-				this.Boat_dir = "Backward";*/
+				this.Boat_dir = "Backward";
 			}
 
 			// rotate left/right/up/down
@@ -332,12 +332,12 @@ var DEMO = {
 			}
 		}
 
-		this.ms_Camera.lookAt(ms_MovingBoat.position);
+/*		this.ms_Camera.lookAt(ms_MovingBoat.position);
 
 		// Stop player before reaching limits
 		var tmr = document.querySelector('#timer');
 		var tmrVal = tmr.innerHTML;
-/*		if(ms_MovingBoat.position.x > 1000 || ms_MovingBoat.position.x < -1000 || ms_MovingBoat.position.z > 1000 || ms_MovingBoat.position.z < -1000 && tmrVal !== parseInt("0") ) {
+		if(ms_MovingBoat.position.x > 1000 || ms_MovingBoat.position.x < -1000 || ms_MovingBoat.position.z > 1000 || ms_MovingBoat.position.z < -1000 && tmrVal !== parseInt("0") ) {
 			alert("Vous êtes mort désolé !");
 			var href = 'index.html';
 			$(location).attr('href', 'index.html');
